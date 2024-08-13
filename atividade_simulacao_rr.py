@@ -1,4 +1,4 @@
-# Dados dos processos
+#atividade de Daniel Guimarães Silva - Turma B
 processos = [
     {"processo": "P1", "arrival_time": 0, "tempo_processo": 1},
     {"processo": "P2", "arrival_time": 0, "tempo_processo": 2},
@@ -7,7 +7,7 @@ processos = [
     {"processo": "P5", "arrival_time": 2, "tempo_processo": 10},
 ]
 
-# Inicializa variáveis
+
 tempos_resposta = {}
 tempos_retorno = {}
 tempos_espera = {}
@@ -63,9 +63,9 @@ for processo in processos:
         tempos_espera[nome_processo] = 0  # Se o processo não foi completado
 
 # Calcula as médias dos tempos
-media_tempo_resposta = sum(tempos_resposta.values()) / len(tempos_resposta) if tempos_resposta else 0
-media_tempo_retorno = sum(tempos_retorno.values()) / len(tempos_retorno) if tempos_retorno else 0
-media_tempo_espera = sum(tempos_espera.values()) / len(tempos_espera) if tempos_espera else 0
+media_tempo_resposta = sum(tempos_resposta.values()) / len(tempos_resposta) 
+media_tempo_retorno = sum(tempos_retorno.values()) / len(tempos_retorno) 
+media_tempo_espera = sum(tempos_espera.values()) / len(tempos_espera) 
 
 # Exibindo os resultados
 print("Round Robin:")
