@@ -1,4 +1,4 @@
-#atividade de Daniel Guimarães Silva - Turma B
+# Dados dos processos
 processos = [
     {"processo": "P1", "arrival_time": 0, "tempo_processo": 1},
     {"processo": "P2", "arrival_time": 0, "tempo_processo": 2},
@@ -7,72 +7,75 @@ processos = [
     {"processo": "P5", "arrival_time": 2, "tempo_processo": 10},
 ]
 
+# Configurações do Round Robin
+quantum = 2
+overhead = 1
 
+# Inicializando variáveis
+tempo_atual = 0
+fila = []
+ordem_atendimento = []
 tempos_resposta = {}
 tempos_retorno = {}
-tempos_espera = {}
-overhead = 1
-tempo_atual = 0
-quantum = 2
-ordem = []
-prontos = []
+tempo_restante = {p["processo"]: p["tempo_processo"] for p in processos}
+tempo_inicio_execucao = {}
+processos_na_fila = {p["processo"]: False for p in processos}
 
-# Adiciona processos à fila de prontos com base no tempo de chegada
-def adicionar_na_fila():
-    for processo in processos:
-        if processo["arrival_time"] <= tempo_atual and processo["processo"] not in [p["processo"] for p in prontos]:
-            prontos.append(processo)
+# Função para adicionar processos que chegaram na fila
+def adicionar_processos_na_fila(tempo_atual):
+    for p in processos:
+        if p["arrival_time"] <= tempo_atual and not processos_na_fila[p["processo"]]:
+            fila.append(p)
+            processos_na_fila[p["processo"]] = True
 
-# Executa a simulação Round Robin
-while processos or prontos:
-    adicionar_na_fila()
+# Simulação do Round Robin
+while fila or any(tempo_restante[p["processo"]] > 0 for p in processos):
+    adicionar_processos_na_fila(tempo_atual)
     
-    if prontos:
-        processo_atual = prontos.pop(0)
-        nome_processo = processo_atual["processo"]
-        
-        if nome_processo not in tempos_resposta:
-            tempos_resposta[nome_processo] = tempo_atual - processo_atual["arrival_time"]
-        
-        tempo_execucao = min(quantum, processo_atual["tempo_processo"])
-        
-        # Atualiza o tempo de execução
+    if fila:
+        processo_atual = fila.pop(0)
+        p_nome = processo_atual["processo"]
+
+        # Tempo de resposta (se o processo ainda não começou a ser executado)
+        if p_nome not in tempo_inicio_execucao:
+            tempo_inicio_execucao[p_nome] = tempo_atual
+            tempos_resposta[p_nome] = tempo_inicio_execucao[p_nome] - processo_atual["arrival_time"]
+
+        # Executa o processo por um quantum ou pelo tempo restante, o que for menor
+        tempo_execucao = min(quantum, tempo_restante[p_nome])
+        tempo_restante[p_nome] -= tempo_execucao
         tempo_atual += tempo_execucao
-        processo_atual["tempo_processo"] -= tempo_execucao
-        
-        if processo_atual["tempo_processo"] > 0:
-            # Adiciona o processo de volta à fila se ainda restar tempo
-            processo_atual["arrival_time"] = tempo_atual
-            prontos.append(processo_atual)
-        else:
-            # Calcula o tempo de retorno
-            tempos_retorno[nome_processo] = tempo_atual - processo_atual["arrival_time"]
-        
-        # Adiciona o processo à ordem de atendimento
-        ordem.append(nome_processo)
-        
-        # Aplica o overhead
+
+        # Se o processo terminou, calcula o tempo de retorno
+        if tempo_restante[p_nome] == 0:
+            tempos_retorno[p_nome] = tempo_atual - processo_atual["arrival_time"]
+
+        ordem_atendimento.append(p_nome)
+
+        # Adiciona o overhead de troca de contexto
         tempo_atual += overhead
 
-# Calcula o tempo de espera para cada processo
-for processo in processos:
-    nome_processo = processo["processo"]
-    if nome_processo in tempos_retorno and nome_processo in tempos_resposta:
-        tempos_espera[nome_processo] = tempos_retorno[nome_processo] - processo["tempo_processo"] - tempos_resposta[nome_processo]
+        # Se o processo não terminou, volta para a fila
+        if tempo_restante[p_nome] > 0:
+            adicionar_processos_na_fila(tempo_atual)
+            fila.append(processo_atual)
     else:
-        tempos_espera[nome_processo] = 0  # Se o processo não foi completado
+        # Se a fila estiver vazia, avance o tempo até o próximo processo chegar
+        tempo_atual += 1
 
-# Calcula as médias dos tempos
-media_tempo_resposta = sum(tempos_resposta.values()) / len(tempos_resposta) 
-media_tempo_retorno = sum(tempos_retorno.values()) / len(tempos_retorno) 
-media_tempo_espera = sum(tempos_espera.values()) / len(tempos_espera) 
+# Cálculo das médias de tempo de resposta e retorno
+media_tempo_resposta = sum(tempos_resposta.values()) / len(processos)
+media_tempo_retorno = sum(tempos_retorno.values()) / len(processos)
 
-# Exibindo os resultados
-print("Round Robin:")
-print(f"Ordem de atendimento dos processos: {ordem}")
-print(f"Tempo de resposta para cada processo: {tempos_resposta}")
-print(f"Tempo de retorno para cada processo: {tempos_retorno}")
-print(f"Tempo de espera para cada processo: {tempos_espera}")
-print(f"Média de tempo de resposta: {media_tempo_resposta:.2f}")
-print(f"Média de tempo de retorno: {media_tempo_retorno:.2f}")
-print(f"Média de tempo de espera: {media_tempo_espera:.2f}")
+# Exibição dos resultados
+print("Ordem de Atendimento dos Processos:", ordem_atendimento)
+print("\nTempos de Resposta:")
+for p in processos:
+    print(f"{p['processo']}: {tempos_resposta[p['processo']]} unidades de tempo")
+
+print("\nTempos de Retorno:")
+for p in processos:
+    print(f"{p['processo']}: {tempos_retorno[p['processo']]} unidades de tempo")
+
+print(f"\nMédia do Tempo de Resposta: {media_tempo_resposta:.2f} unidades de tempo")
+print(f"Média do Tempo de Retorno: {media_tempo_retorno:.2f} unidades de tempo")
