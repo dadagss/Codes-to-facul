@@ -1,3 +1,4 @@
+#atividade de Daniel Guimarães Silva - Turma B -
 # Dados dos processos
 processos = [
     {"processo": "P1", "arrival_time": 0, "tempo_processo": 1},
