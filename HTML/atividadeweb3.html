@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área de Cliques com Retângulos</title>
+    <style>
+        /* Estilo para a área de clique */
+        #click-area {
+            width: 500px;
+            height: 500px;
+            border: 2px solid black;
+            position: relative;
+            margin: 50px auto;
+            background-color: #f0f0f0;
+        }
+
+        /* Estilo para os retângulos */
+        .rectangle {
+            width: 60px;
+            height: 30px;
+            background-color: #e74c3c;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Clique na área abaixo para adicionar retângulos:</h2>
+    <div id="click-area"></div>
+
+    <script>
+        const clickArea = document.getElementById('click-area');
+
+        clickArea.addEventListener('click', function(event) {
+            // Cria um novo elemento div para o retângulo
+            const rectangle = document.createElement('div');
+            rectangle.classList.add('rectangle');
+
+            // Define a posição do retângulo no local do clique
+            const rect = clickArea.getBoundingClientRect();
+            const x = event.clientX - rect.left - 30; // centralizar o retângulo
+            const y = event.clientY - rect.top - 15;  // centralizar o retângulo
+
+            rectangle.style.left = `${x}px`;
+            rectangle.style.top = `${y}px`;
+
+            // Adiciona o retângulo à área de clique
+            clickArea.appendChild(rectangle);
+        });
+    </script>
+
+</body>
+</html>

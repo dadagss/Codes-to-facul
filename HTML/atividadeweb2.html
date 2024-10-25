@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área de Cliques com Quadrados</title>
+    <style>
+        /* Estilo para a área de clique */
+        #click-area {
+            width: 500px;
+            height: 500px;
+            border: 2px solid black;
+            position: relative;
+            margin: 50px auto;
+            background-color: #f0f0f0;
+        }
+
+        /* Estilo para os quadrados */
+        .square {
+            width: 30px;
+            height: 30px;
+            background-color: #3498db;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Clique na área abaixo para adicionar quadrados:</h2>
+    <div id="click-area"></div>
+
+    <script>
+        const clickArea = document.getElementById('click-area');
+
+        clickArea.addEventListener('click', function(event) {
+            // Cria um novo elemento div para o quadrado
+            const square = document.createElement('div');
+            square.classList.add('square');
+
+            // Define a posição do quadrado no local do clique
+            const rect = clickArea.getBoundingClientRect();
+            const x = event.clientX - rect.left - 15; // centralizar o quadrado
+            const y = event.clientY - rect.top - 15;  // centralizar o quadrado
+
+            square.style.left = `${x}px`;
+            square.style.top = `${y}px`;
+
+            // Adiciona o quadrado à área de clique
+            clickArea.appendChild(square);
+        });
+    </script>
+
+</body>
+</html>

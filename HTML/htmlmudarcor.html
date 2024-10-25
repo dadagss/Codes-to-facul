@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar Estilo do Texto</title>
+    <style>
+        #texto {
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Exemplo de Alteração de Estilo</h1>
+    <p id="texto">Este é um texto que mudará de estilo!</p>
+    <button onclick="alterarEstilo1()">Estilo 1</button>
+    <button onclick="alterarEstilo2()">Estilo 2</button>
+
+    <script>
+        function alterarEstilo1() {
+            const texto = document.getElementById('texto');
+            texto.style.color = 'blue';
+            texto.style.fontSize = '30px';
+            texto.style.fontFamily = 'Courier New, monospace';
+        }
+
+        function alterarEstilo2() {
+            const texto = document.getElementById('texto');
+            texto.style.color = 'red';
+            texto.style.fontSize = '24px';
+            texto.style.fontFamily = 'Georgia, serif';
+        }
+    </script>
+</body>
+</html>

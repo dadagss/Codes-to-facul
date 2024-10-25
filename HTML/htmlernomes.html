@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nome Completo</title>
+</head>
+<body>
+    <h1>Formulário de Nome Completo</h1>
+    
+    <label for="firstName">Nome:</label>
+    <input type="text" id="firstName" placeholder="Digite seu nome">
+    <br><br>
+    
+    <label for="lastName">Sobrenome:</label>
+    <input type="text" id="lastName" placeholder="Digite seu sobrenome">
+    <br><br>
+    
+    <button onclick="mostrarNomeCompleto()">Mostrar Nome Completo</button>
+    <button onclick="mostrarNomeReverso()">Mostrar Nome Reverso</button>
+    
+    <h2 id="output"></h2>
+    <h2 id="reversedOutput"></h2>
+
+    <script>
+        function mostrarNomeCompleto() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const fullName = `${firstName} ${lastName}`;
+            document.getElementById('output').innerText = `O nome completo informado é: ${fullName}`;
+            document.getElementById('reversedOutput').innerText = ''; // Limpa a saída reversa
+        }
+
+        function mostrarNomeReverso() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const fullName = `${firstName} ${lastName}`;
+            const reversedName = fullName.split('').reverse().join('');
+            document.getElementById('reversedOutput').innerText = `O nome completo reverso é: ${reversedName}`;
+            document.getElementById('output').innerText = ''; // Limpa a saída normal
+        }
+    </script>
+</body>
+</html>

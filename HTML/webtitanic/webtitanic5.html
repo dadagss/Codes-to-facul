@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bilheteira do Titanic - Compra</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Bilheteira do Titanic</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <li><a href="tickets.html">Tickets</a></li>
+        <li><a href="cadastro.html">Cadastro</a></li>
+        <li><a href="compra.html">Compra</a></li>
+        <li><a href="confirmacao.html">Confirmação</a></li>
+        <li><a href="agradecimento.html">Agradecimento</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <main>
+    <h2>Formulário de Compra</h2>
+    <form action="confirmacao.html" method="post">
+      <label for="pagamento">Meio de Pagamento:</label>
+      <select id="pagamento" name="pagamento" required>
+        <option value="cartao">Cartão de Crédito</option>
+        <option value="boleto">Boleto Bancário</option>
+        <option value="paypal">PayPal</option>
+      </select><br>
+      
+      <label for="produtos">Produtos:</label>
+      <input type="text" id="produtos"
