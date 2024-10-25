@@ -73,7 +73,7 @@ print("Ordem de Atendimento dos Processos:", ordem_atendimento)
 print("\nTempos de Resposta:")
 for p in processos:
     print(f"{p['processo']}: {tempos_resposta[p['processo']]} unidades de tempo")
-
+#retorna o tempo de retorno
 print("\nTempos de Retorno:")
 for p in processos:
     print(f"{p['processo']}: {tempos_retorno[p['processo']]} unidades de tempo")

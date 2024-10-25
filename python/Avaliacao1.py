@@ -52,10 +52,10 @@ class Gato(Animal):
         self.cor = cor
 
     def getcor(self):
-        return self.cor
+        return self.v
 
-    def setcor(self, nova_cor):
-        self.cor = nova_cor
+    def setv(self, nova_cor):
+        self.v = nova_cor
 
     def getraca(self):
         return self.raca
